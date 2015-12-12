@@ -34,9 +34,28 @@ app.post('/catalog/new', function(req, res) {
     db.catalog.push({ id: newid, name: req.body.name, description: req.body.description });
     fs.writeFile('./fakedata.json', JSON.stringify(db), function(err) {
       if (err) throw err;
-      else res.send('success');
+      else res.send(true);
     });
   } else {
-    res.send('invalid data format');
+    res.send(false);
   }
+});
+
+app.delete('/catalog/:id', function(req, res) {
+  var id = Number(req.params.id);
+  var found = false;
+  for (var i = 0; i < db.catalog.length; i++) {
+    if (db.catalog[i].id === id) {
+      found = true;
+      db.catalog.splice(i, 1);
+      fs.writeFile('./fakedata.json', JSON.stringify(db), function(err) {
+        if (err) {
+          res.send(false);
+        }
+        else res.send(true);
+      });
+      i = db.catalog.length;
+    }
+  }
+  if (!found) res.send(false);
 });
