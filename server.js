@@ -2,11 +2,16 @@ var express = require('express');
 var db = require('./fakedata.json');
 var bodyParser = require('body-parser');
 var fs = require('fs');
+var cors = require('cors')
+
 var app = express();
 
 app.listen(8080);
 console.log('Server running on port 8080');
+
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cors())
+
 
 app.get('/', function(req, res) {
   res.send('Hello World');

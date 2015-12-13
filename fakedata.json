@@ -1,1 +1,5 @@
-{"catalog":[{"id":1,"name":"Item 1","description":"Item 2 description"},{"id":2,"name":"Item 2","description":"Item 2 description"},{"id":3,"name":"Item 3","description":"Item 3 description"},{"id":4,"name":"Kyle","description":"Handsomest"}]}
+{"catalog":[
+    {"id":1,"name":"Honey",   "price": "3.50", "description":"Sweet stuff"},
+    {"id":2,"name":"Almonds", "price": "5.55", "description":"Fucking nuts"},
+    {"id":3,"name":"Lentils", "price": "0.99", "description":"Small and round"}
+  ]}
