@@ -36,10 +36,17 @@ app.get('/catalog/:id', function(req, res) {
 app.post('/catalog/new', function(req, res) {
   var newid = db.catalog[db.catalog.length - 1].id + 1;
   if (req.body.name && req.body.description) {
-    db.catalog.push({ id: newid, name: req.body.name, description: req.body.description });
+    db.catalog.push({
+      id: newid,
+      name: req.body.name,
+      price: req.body.price, 
+      description: req.body.description });
     fs.writeFile('./fakedata.json', JSON.stringify(db), function(err) {
       if (err) throw err;
-      else res.send(true);
+      else {
+        console.log('success')
+        res.send(true);
+      }
     });
   } else {
     res.send(false);
