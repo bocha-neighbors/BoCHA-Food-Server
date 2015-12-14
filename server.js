@@ -18,7 +18,7 @@ console.log('Server running on port 8080');
 // app.use(logger('combined', {
 //   stream: accessLogStream
 // }))
-// app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors())
 
 app.use(function (req, res, next) {
