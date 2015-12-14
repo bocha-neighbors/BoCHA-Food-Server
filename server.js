@@ -3,14 +3,42 @@ var db = require('./fakedata.json');
 var bodyParser = require('body-parser');
 var fs = require('fs');
 var cors = require('cors')
+var Tabletop = require('tabletop')
 
+var logger = require('morgan')
 var app = express();
+var accessLogStream =
+  fs.createWriteStream(__dirname + '/access.log', {flags: 'a', verbose: true})
+
+var globalData = [] // Need to figure out a way not to use a global!
 
 app.listen(8080);
 console.log('Server running on port 8080');
 
-app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(logger('combined', {
+//   stream: accessLogStream
+// }))
+// app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors())
+
+app.use(function (req, res, next) {
+  console.log('starting the middlewarezzz')
+  var public_spreadsheet_url =
+  'https://docs.google.com/spreadsheets/d/1Lsk1dxcfTuF0Qu_a-roO5EEsOy05zUdLYbCg38wovTA/pubhtml?gid=276685053&single=true'
+
+  Tabletop.init( { key: public_spreadsheet_url,
+                   callback: showInfo,
+                   simpleSheet: true,
+                   debug: true
+                  } )
+
+  function showInfo(data, tabletop) {
+    console.log("Successfully processed!")
+    // console.log(data)
+    globalData = data
+    next()
+  }
+})
 
 
 app.get('/', function(req, res) {
@@ -19,8 +47,12 @@ app.get('/', function(req, res) {
 
 // list catalog
 app.get('/catalog', function(req, res) {
-  res.json(db.catalog);
-});
+  console.log('Getting the catalog')
+  // console.log('Heres your request', req)
+
+  res.json(globalData);
+})
+
 
 app.get('/catalog/:id', function(req, res) {
   var id = Number(req.params.id);
@@ -39,7 +71,7 @@ app.post('/catalog/new', function(req, res) {
     db.catalog.push({
       id: newid,
       name: req.body.name,
-      price: req.body.price, 
+      price: req.body.price,
       description: req.body.description });
     fs.writeFile('./fakedata.json', JSON.stringify(db), function(err) {
       if (err) throw err;
