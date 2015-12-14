@@ -29,12 +29,18 @@ app.use(function (req, res, next) {
   Tabletop.init( { key: public_spreadsheet_url,
                    callback: showInfo,
                    simpleSheet: true,
-                   debug: true
+                   debug: false
                   } )
 
   function showInfo(data, tabletop) {
-    console.log("Successfully processed!")
-    // console.log(data)
+    // Save the data to a flat file on the local server
+    fs.writeFile('./catalog.json', JSON.stringify(data), function(err) {
+      if (err) throw err;
+      else {
+        console.log('Successfully wrote google sheet data to catalog.json.')
+      }
+    });
+
     globalData = data
     next()
   }
