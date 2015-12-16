@@ -10,14 +10,9 @@ var app = express();
 var accessLogStream =
   fs.createWriteStream(__dirname + '/access.log', {flags: 'a', verbose: true})
 
-// var globalData = [] // Need to figure out a way not to use a global!
-
 app.listen(8080);
 console.log('Server running on port 8080');
 
-// app.use(logger('combined', {
-//   stream: accessLogStream
-// }))
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors())
 
@@ -41,7 +36,8 @@ app.use(function (req, res, next) {
       }
     });
 
-    // globalData = data
+    // Append the google sheet data to the response.
+    // This is then passed to the routes, where it can be served to the user.
     res.tabledata = data
     next()
   }
