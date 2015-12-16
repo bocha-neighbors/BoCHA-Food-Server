@@ -10,7 +10,7 @@ var app = express();
 var accessLogStream =
   fs.createWriteStream(__dirname + '/access.log', {flags: 'a', verbose: true})
 
-var globalData = [] // Need to figure out a way not to use a global!
+// var globalData = [] // Need to figure out a way not to use a global!
 
 app.listen(8080);
 console.log('Server running on port 8080');
@@ -41,7 +41,8 @@ app.use(function (req, res, next) {
       }
     });
 
-    globalData = data
+    // globalData = data
+    res.tabledata = data
     next()
   }
 })
@@ -56,7 +57,7 @@ app.get('/catalog', function(req, res) {
   console.log('Getting the catalog')
   // console.log('Heres your request', req)
 
-  res.json(globalData);
+  res.json(res.tabledata);
 })
 
 
