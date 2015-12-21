@@ -17,32 +17,25 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors())
 
 app.use(function (req, res, next) {
-  console.log('starting the middlewarezzz')
   var public_spreadsheet_url =
-  'https://docs.google.com/spreadsheets/d/1Lsk1dxcfTuF0Qu_a-roO5EEsOy05zUdLYbCg38wovTA/pubhtml?gid=276685053&single=true'
-
-  Tabletop.init( { key: public_spreadsheet_url,
-                   callback: showInfo,
-                   simpleSheet: true,
-                   debug: false
-                  } )
-
+    'https://docs.google.com/spreadsheets/d/1xMW98m2-Y8rrbmACA9l1fUT5jb4tKvrRBCSWvH28guw/pubhtml?gid=1526253182&single=true'
+  Tabletop.init({ key: public_spreadsheet_url,
+                  callback: showInfo,
+                  simpleSheet: true,
+                  debug: false
+  })
   function showInfo(data, tabletop) {
     // Save the data to a flat file on the local server
     fs.writeFile('./catalog.json', JSON.stringify(data), function(err) {
       if (err) throw err;
-      else {
-        console.log('Successfully wrote google sheet data to catalog.json.')
-      }
-    });
-
+      else console.log('Successfully wrote google sheet data to catalog.json.')
+    }) // fs.writeFile
     // Append the google sheet data to the response.
     // This is then passed to the routes, where it can be served to the user.
     res.tabledata = data
     next()
-  }
-})
-
+  } // showInfo declaration
+}) // app.use
 
 app.get('/', function(req, res) {
   res.send('Hello World');
