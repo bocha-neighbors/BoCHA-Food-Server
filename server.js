@@ -10,8 +10,6 @@ var app = express();
 var accessLogStream =
   fs.createWriteStream(__dirname + '/access.log', {flags: 'a', verbose: true})
 
-app.listen(8080);
-console.log('Server running on port 8080');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors())
@@ -99,3 +97,6 @@ app.delete('/catalog/:id', function(req, res) {
   }
   if (!found) res.send(false);
 });
+
+app.listen(process.env.PORT || 8080);
+console.log('Server running on port ', process.env.PORT || 8080);
