@@ -19,10 +19,10 @@
     "express": "^4.13.3",
     "foreman": "1.4.1",
     "nodemon": "^1.8.1",
-    "tabletop": "^1.4.2"
+    "tabletop": "^1.4.2",
+    "morgan": "^1.6.1"
   },
   "devDependencies": {
-    "morgan": "^1.6.1"
   },
   "engines": {
     "node": "4.2.1"
