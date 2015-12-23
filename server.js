@@ -14,7 +14,7 @@ var accessLogStream =
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors())
 
-app.use(function (req, res, next) {
+app.use('/catalog', function (req, res, next) {
   var public_spreadsheet_url =
     'https://docs.google.com/spreadsheets/d/1xMW98m2-Y8rrbmACA9l1fUT5jb4tKvrRBCSWvH28guw/pubhtml?gid=1526253182&single=true'
   Tabletop.init({ key: public_spreadsheet_url,
@@ -47,6 +47,10 @@ app.get('/catalog', function(req, res) {
   res.json(res.tabledata);
 })
 
+app.post('/orders', function(request, response) {
+  console.log(request)
+  response.send('got it')
+})
 
 // app.get('/catalog/:id', function(req, res) {
 //   var id = Number(req.params.id);
