@@ -48,8 +48,8 @@ app.get('/catalog', function(req, res) {
 })
 
 app.post('/orders', function(request, response) {
-  console.log(request)
-  response.send('got it')
+  console.log(request.body)
+  response.send('Order received.')
 })
 
 // app.get('/catalog/:id', function(req, res) {
@@ -102,5 +102,5 @@ app.post('/orders', function(request, response) {
 //   if (!found) res.send(false);
 // });
 
-app.listen(process.env.PORT || 8080);
-console.log('Server running on port ', process.env.PORT || 8080);
+app.listen(process.env.PORT || 5000);
+console.log('Server running on port ', process.env.PORT || 5000);
